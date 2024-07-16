@@ -69,6 +69,8 @@ if isinstance(clargs.createNewick, list):
     clargs.createNewick = clargs.createNewick[0]
 if isinstance(clargs.writeMigrations, list):
     clargs.writeMigrations = clargs.writeMigrations[0]
+if isinstance(clargs.writeMutations, list):
+    clargs.writeMutations = clargs.writeMutations[0]
 if isinstance(clargs.output_chain_events, list):
     clargs.output_chain_events = clargs.output_chain_events[0]
 
