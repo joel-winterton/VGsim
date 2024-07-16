@@ -194,7 +194,13 @@ class Vertex():
             self.__right_child = Leaf(right_node, right_time, populations)
 
     def get_children(self, base_time):
-        return '({0},{1}){2}:{3}'.format(self.__left_child.get_children(self.__root_time), self.__right_child.get_children(self.__root_time), self.__root, self.__root_time - base_time)
+        return '({0},{1}){2}:{3}'.format(self.__left_child.get_children(self.__root_time),
+                                         self.__right_child.get_children(self.__root_time), self.__root,
+                                         self.__root_time - base_time)
+
+    def write_metadata(self, base_time):
+        return ('{0}\t{1}\t{2}\n'.format(self.__root, self.__root_population_id, self.__root_time - base_time)
+                + self.__left_child.write_metadata(base_time) + self.__right_child.write_metadata(base_time))
 
     def write_population(self):
         return '{0}\t{1}\n'.format(self.__root, self.__root_population_id) + self.__left_child.write_population() + self.__right_child.write_population()
@@ -207,6 +213,9 @@ class Leaf(Vertex):
 
     def get_children(self, base_time):
         return '{0}:{1}'.format(self.__leaf, self.__times - base_time)
+
+    def write_metadata(self, base_time):
+        return '{0}\t{1}\t{2}\n'.format(self.__leaf, self.__leaf_population_id, self.__times - base_time)
 
     def write_population(self):
         return '{0}\t{1}\n'.format(self.__leaf, self.__leaf_population_id)
@@ -237,19 +246,24 @@ def writeGenomeNewick(pruferSeq, times, populations, name_file, file_path):
 
     result = Vertex(root, root_time, children, populations)
 
-    if file_path != None:
+    if file_path is not None:
         f_nwk = open(file_path + '/' + name_file + '_tree.nwk', 'w')
         f_pop = open(file_path + '/' + name_file + '_sample_population.tsv', 'w')
-    elif name_file != None:
+        f_node_data = open(file_path + '/' + name_file + '_node_data.csv', 'w')
+    elif name_file is not None:
         f_nwk = open(name_file + '_tree.nwk', 'w')
         f_pop = open(name_file + '_sample_population.tsv', 'w')
+        f_node_data = open(name_file + '_node_data.csv', 'w')
     else:
         f_nwk = open('tree.nwk', 'w')
         f_pop = open('sample_population.tsv', 'w')
+        f_node_data = open('metadata.csv', 'w')
 
     f_nwk.write(result.get_children(root_time))
     f_nwk.write(';')
     f_pop.write(result.write_population())
-
+    f_node_data.write('strain\tlocation\ttime\n')
+    f_node_data.write(result.write_metadata(root_time))
     f_nwk.close()
     f_pop.close()
+    f_node_data.close()
