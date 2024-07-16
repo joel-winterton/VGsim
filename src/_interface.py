@@ -537,18 +537,17 @@ class Simulator:
         """
         Show all information about sampling, time, place, etc.
 
-        :param output_print: if *Thue*, it outputs data about each sample to the console. Data includes time of sampling, population and haplotype of sampled individual.
+        :param output_print: if *True*, it outputs data about each sample to the console. Data includes time of sampling, population and haplotype of sampled individual.
         :type output_print: bool
 
         :return: 3 lists with times, population ids and haplotypes of the sampled individuals
         """
         time, pop, hap = self.simulation.output_sample_data()
-        if output_print:
+        if not output_print:
             return time, pop, hap
-        else:
-            print(time)
-            print(pop)
-            print(hap)
+        print(time)
+        print(pop)
+        print(hap)
 
     def output_epidemiology_timelines(self, step=1000, output_file=False):
         """
