@@ -262,15 +262,15 @@ def writeGenomeNewick(pruferSeq, times, populations, name_file, file_path):
     if file_path is not None:
         f_nwk = open(file_path + '/' + name_file + '_tree.nwk', 'w')
         f_pop = open(file_path + '/' + name_file + '_sample_population.tsv', 'w')
-        f_node_data = open(file_path + '/' + name_file + '_metadata.csv', 'w')
+        f_node_data = open(file_path + '/' + name_file + '_metadata.tsv', 'w')
     elif name_file is not None:
         f_nwk = open(name_file + '_tree.nwk', 'w')
         f_pop = open(name_file + '_sample_population.tsv', 'w')
-        f_node_data = open(name_file + '_metadata.csv', 'w')
+        f_node_data = open(name_file + '_metadata.tsv', 'w')
     else:
         f_nwk = open('tree.nwk', 'w')
         f_pop = open('sample_population.tsv', 'w')
-        f_node_data = open('metadata.csv', 'w')
+        f_node_data = open('metadata.tsv', 'w')
 
     f_nwk.write(result.get_children(root_time))
     f_nwk.write(';')
