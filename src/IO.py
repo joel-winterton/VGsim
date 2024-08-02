@@ -181,9 +181,9 @@ def writeMutations(mut, len_prufer, name_file, file_path):
 
 
 class Vertex():
-    def __init__(self, root, root_time, children, populations, modifier=None):
+    def __init__(self, root, root_time, children, populations):
         self.__children = children
-        self.__root = f"${root}" if modifier else root
+        self.__root = root
         self.__root_time = root_time
         self.__root_population_id = populations[self.__root_time]
         left_node = self.__children[root][0][0]
@@ -257,7 +257,7 @@ def writeGenomeNewick(pruferSeq, times, populations, name_file, file_path):
     root = children[-1][0][0]
     root_time = children[-1][0][1]
 
-    result = Vertex(root, root_time, children, populations, modifier=True)
+    result = Vertex(root, root_time, children, populations)
 
     if file_path is not None:
         f_nwk = open(file_path + '/' + name_file + '_tree.nwk', 'w')
