@@ -163,7 +163,7 @@ cdef class BirthDeathModel:
         self.hapMutType = np.ones((self.hapNum, self.sites, 3), dtype=float)
 
         for hn in range(self.hapNum):
-            self.bRate[hn] = 2.0
+            self.bRate[hn] = 3.0
             self.dRate[hn] = 1.0
             self.sRate[hn] = 0.01
             for s in range(self.sites):
